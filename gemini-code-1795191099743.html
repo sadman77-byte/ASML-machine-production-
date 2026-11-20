@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>সাধারণ মানুষের জন্য AI ও ASML সহজ গাইড</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card: #1e293b;
+      --card-inner: #0f172a;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-dark: #0284c7;
+      --analogy-bg: #172554;
+      --analogy-border: #60a5fa;
+      --border: #334155;
+      --green: #10b981;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      line-height: 1.75;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      padding: 28px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    header h1 {
+      margin: 0 0 8px 0;
+      font-size: 1.75rem;
+      color: var(--accent);
+    }
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--card);
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+    select, input, button {
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card-inner);
+      color: var(--text);
+      font-size: 0.96rem;
+    }
+    input { flex: 1; min-width: 220px; }
+    button {
+      background: var(--accent-dark);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    button:hover { background: #0369a1; }
+    button.secondary { background: #334155; }
+    button.secondary:hover { background: #475569; }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .chip:hover, .chip.active {
+      background: var(--accent-dark);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .main-card {
+      background: var(--card);
+      padding: 28px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .main-card h2 {
+      margin: 0 0 12px 0;
+      font-size: 1.45rem;
+      color: #fff;
+    }
+    .simple-text {
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      margin-bottom: 18px;
+    }
+    .steps-container {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .step-item {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px;
+      border-radius: 10px;
+    }
+    .step-item strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .analogy-box {
+      background: var(--analogy-bg);
+      border-left: 4px solid var(--analogy-border);
+      padding: 16px 18px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+    .analogy-box strong {
+      display: block;
+      color: #93c5fd;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+    .daily-impact {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      border-radius: 10px;
+    }
+    .daily-impact strong {
+      display: block;
+      color: #34d399;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+    /* Interactive Switch Box for Chip Calculation */
+    .demo-box {
+      background: var(--card-inner);
+      border: 1px dashed var(--accent);
+      padding: 18px;
+      border-radius: 12px;
+      margin: 18px 0;
+    }
+    .demo-box h4 {
+      margin: 0 0 8px 0;
+      color: var(--accent);
+    }
+    .switch-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .bit-btn {
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #1e293b;
+      color: #94a3b8;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .bit-btn.on {
+      background: var(--green);
+      color: #052e16;
+      border-color: #34d399;
+    }
+    .calc-result {
+      padding: 10px 16px;
+      background: #172554;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #93c5fd;
+    }
+    .all-list {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 14px;
+    }
+    .mini-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .mini-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .mini-card h4 {
+      margin: 0 0 6px 0;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="appTitle">সাধারণ মানুষের জন্য AI ও ASML সহজ গাইড</h1>
+      <p id="appSubtitle">বালি থেকে কীভাবে চিপ তৈরি হয় এবং চিপ কীভাবে হিসাব করে—সবকিছু জানুন সহজ গল্পের মতো।</p>
+    </header>
+
+    <div class="toolbar">
+      <select id="langSelect" aria-label="Language">
+        <option value="bn">বাংলা (Bangla)</option>
+        <option value="en">English</option>
+        <option value="zh">中文 (Chinese)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+      </select>
+
+      <input id="searchInput" type="text" placeholder="যেকোনো শব্দ লিখুন (যেমন: চিপ তৈরি, হিসাব, EUV, AI)..." />
+      <button id="searchBtn">খুঁজুন</button>
+      <button id="speakBtn" class="secondary">🔊 পড়ে শোনান</button>
+    </div>
+
+    <div class="chips" id="topicChips"></div>
+
+    <div class="main-card" id="detailCard"></div>
+
+    <div class="all-list" id="overviewGrid"></div>
+  </div>
+
+  <script>
+    const UI_TEXT = {
+      bn: {
+        title: "সাধারণ মানুষের জন্য AI ও ASML সহজ গাইড",
+        subtitle: "বালি থেকে কীভাবে চিপ তৈরি হয় এবং চিপ কীভাবে হিসাব করে—সবকিছু জানুন সহজ গল্পের মতো।",
+        placeholder: "যেকোনো শব্দ লিখুন (যেমন: চিপ তৈরি, হিসাব, EUV, AI)...",
+        searchBtn: "খুঁজুন",
+        speakBtn: "🔊 পড়ে শোনান",
+        analogyLabel: "💡 বাস্তব জীবনের উদাহরণ:",
+        impactLabel: "🌍 সাধারণ মানুষের জীবনে প্রভাব:",
+        demoTitle: "🧪 নিজে পরীক্ষা করে দেখুন: চিপ কীভাবে সুইচ অন/অফ করে হিসাব করে",
+        demoHint: "নিচের সুইচগুলোতে ক্লিক করে চালু (১) বা বন্ধ (০) করুন—দেখুন চিপ কীভাবে সংখ্যা তৈরি করে:",
+        demoResultPrefix: "চিপের হিসাব করা সংখ্যা:"
+      },
+      en: {
+        title: "Simple Guide to AI & ASML for Everyone",
+        subtitle: "Learn how chips are made from sand and how they calculate—explained in plain language.",
+        placeholder: "Type any keyword (e.g., Manufacturing, Calculate, EUV, AI)...",
+        searchBtn: "Search",
+        speakBtn: "🔊 Listen",
+        analogyLabel: "💡 Everyday Analogy:",
+        impactLabel: "🌍 How It Affects Daily Life:",
+        demoTitle: "🧪 Try It Yourself: How a Chip Counts Using On/Off Switches",
+        demoHint: "Click the switches below to turn them ON (1) or OFF (0) and see the number the chip forms:",
+        demoResultPrefix: "Calculated Number:"
+      },
+      zh: {
+        title: "面向大众的 AI 与 ASML 通俗指南",
+        subtitle: "用通俗易懂的语言了解芯片如何从沙子制造出来，以及芯片如何进行计算。",
+        placeholder: "输入关键词（例如：制造流程、计算、EUV、AI）...",
+        searchBtn: "搜索",
+        speakBtn: "🔊 朗读",
+        analogyLabel: "💡 生活化比喻：",
+        impactLabel: "🌍 对普通人生活的影响：",
+        demoTitle: "🧪 亲手体验：芯片如何用“开/关”计算数字",
+        demoHint: "点击下方开关切换 开(1) 或 关(0)，看看芯片如何组合出数字：",
+        demoResultPrefix: "芯片计算出的数字："
+      },
+      hi: {
+        title: "आम लोगों के लिए AI और ASML की आसान गाइड",
+        subtitle: "रेत से चिप कैसे बनती है और चिप हिसाब कैसे लगाती है—सब कुछ आसान भाषा में समझें।",
+        placeholder: "कोई भी शब्द लिखें (जैसे: चिप निर्माण, हिसाब, EUV, AI)...",
+        searchBtn: "खोजें",
+        speakBtn: "🔊 सुनें",
+        analogyLabel: "💡 रोज़मर्रा का उदाहरण:",
+        impactLabel: "🌍 आम जीवन पर प्रभाव:",
+        demoTitle: "🧪 खुद करके देखें: चिप ऑन/ऑफ़ स्विच से हिसाब कैसे लगाती है",
+        demoHint: "नीचे दिए गए स्विच पर क्लिक करके चालू (1) या बंद (0) करें और देखें चिप कौन-सी संख्या बनाती है:",
+        demoResultPrefix: "चिप द्वारा गिनी गई संख्या:"
+      }
+    };
+
+    const TOPICS = [
+      {
+        id: "chip_making_process",
+        keywords: ["process", "making", "manufacture", "তৈরি", "প্রসেস", "বানানো", "制造", "बनाना"],
+        bn: {
+          tag: "ধাপে ধাপে প্রক্রিয়া",
+          title: "ASML-এর মেশিনে কীভাবে চিপ বানানো হয়? (পুরো প্রসেস)",
+          summary: "একটি চিপ বানাতে শত শত ধাপ পার হতে হয় এবং প্রায় ৩ থেকে ৪ মাস সময় লাগে। সাধারণ মানুষের বোঝার জন্য পুরো প্রক্রিয়াটি নিচে ৫টি সহজ ধাপে সাজানো হলো:",
+          steps: [
+            {
+              head: "ধাপ ১: বালি থেকে সিলিকন ওয়েফার তৈরি",
+              desc: "সাধারণ কোয়ার্টজ বালি গলিয়ে অত্যন্ত বিশুদ্ধ সিলিকন সিলিন্ডার বানানো হয়। এরপর সেটিকে পাতলা রুটি বা সিডির (CD) মতো গোল চাকতি করে কাটা হয়—যাকে 'ওয়েফার' (Wafer) বলে।"
+            },
+            {
+              head: "ধাপ ২: আলোর প্রতি সংবেদনশীল প্রলেপ (Photoresist)",
+              desc: "এই সিলিকন চাকতির ওপর এমন একটি তরল রাসায়নিক প্রলেপ দেওয়া হয়, যার ওপর আলো পড়লে সেটি নরম বা শক্ত হয়ে যায়—অনেকটা পুরোনো দিনের ক্যামেরার ফিল্মের মতো।"
+            },
+            {
+              head: "ধাপ ৩: ASML মেশিনে আলোর ছাপ দেওয়া (Lithography Exposure)",
+              desc: "এখানেই ASML-এর আসল কাজ! চিপের সার্কিটের নকশা একটি কাঁচের প্লেটে (Mask) আঁকা থাকে। ASML-এর EUV মেশিন অতি সূক্ষ্ম আলো ফেলে আয়নার মাধ্যমে সেই নকশাটি ছোট করে সিলিকন চাকতির ওপর ছাপিয়ে দেয়।"
+            },
+            {
+              head: "ধাপ ৪: খোদাই ও ধাতুর সংযোগ (Etching & Deposition)",
+              desc: "যে অংশগুলোতে আলো পড়েছে, সেগুলো রাসায়নিক দিয়ে ধুয়ে সরু নালা বা খাঁজ তৈরি করা হয়। এরপর সেই সূক্ষ্ম নালার ভেতর তামা বা ধাতু ভরে দেওয়া হয়, যাতে বিদ্যুৎ চলাচল করতে পারে।"
+            },
+            {
+              head: "ধাপ ৫: পরীক্ষা ও কেটে আলাদা করা (Testing & Packaging)",
+              desc: "একটি গোল চাকতিতে শত শত চিপ তৈরি হয়। লেজার দিয়ে সেগুলোকে ছোট ছোট চারকোনা টুকরোয় কেটে প্লাস্টিক বা ধাতব আবরণে মুড়ে দেওয়া হয়—যা আপনার ফোন বা কম্পিউটারে বসে।"
+            }
+          ],
+          analogy: "পুরো প্রক্রিয়াটি অনেকটা বহুতল ভবন বানানোর মতো—একতলার পর দোতলা, এভাবে ১০০টিরও বেশি সূক্ষ্ম স্তর একটার ওপর আরেকটা বসিয়ে একটি চিপ তৈরি হয়।",
+          impact: "এই নিখুঁত প্রক্রিয়ার কারণেই হাতের মুঠোয় থাকা একটি ছোট ফোনে আজ সুপারকম্পিউটারের সমান ক্ষমতা পাওয়া যাচ্ছে।"
+        },
+        en: {
+          tag: "Step-by-Step Process",
+          title: "How Are Chips Made Using ASML Machines? (Full Process)",
+          summary: "Making a single chip takes hundreds of steps over 3 to 4 months. Here is the entire journey simplified into 5 clear stages:",
+          steps: [
+            {
+              head: "Step 1: Turning Sand into Silicon Wafers",
+              desc: "Purified quartz sand is melted into pure silicon and sliced into thin, mirror-smooth discs called 'wafers' (similar in shape to a CD)."
+            },
+            {
+              head: "Step 2: Coating with Light-Sensitive Liquid",
+              desc: "The wafer is coated with a special chemical (photoresist) that reacts to light, much like old-fashioned camera film."
+            },
+            {
+              head: "Step 3: Printing Circuits with ASML Machines (Exposure)",
+              desc: "This is where ASML shines. Ultra-short EUV light passes through a circuit blueprint (mask) and bounces off ultra-smooth mirrors to print microscopic patterns onto the wafer."
+            },
+            {
+              head: "Step 4: Carving & Filling Microscopic Paths (Etching)",
+              desc: "Exposed areas are washed away to carve tiny trenches, which are then filled with copper and other materials so electricity can flow."
+            },
+            {
+              head: "Step 5: Cutting, Testing & Packaging",
+              desc: "Each round wafer holds hundreds of chips. They are tested, sliced into individual squares, and sealed into protective packages for phones and servers."
+            }
+          ],
+          analogy: "Building a chip is like constructing a 100-story microscopic skyscraper—layer by layer, aligned to atomic precision.",
+          impact: "This process makes it possible to fit billions of switches onto a chip smaller than a postage stamp."
+        },
+        zh: {
+          tag: "完整制造流程",
+          title: "如何用 ASML 设备制造芯片？（全流程解析）",
+          summary: "制造一颗芯片需要历经数百道工序、耗时约3到4个月。以下是最通俗的5个核心步骤：",
+          steps: [
+            {
+              head: "第1步：把沙子变成硅晶圆",
+              desc: "将高纯度石英砂熔炼成单晶硅柱，再切成像光盘一样薄而光滑的圆片，称为“晶圆”。"
+            },
+            {
+              head: "第2步：涂抹光刻胶",
+              desc: "在晶圆表面涂上一层对光敏感的化学液体（光刻胶），原理类似老式相机的胶卷。"
+            },
+            {
+              head: "第3步：ASML 光刻机曝光印图",
+              desc: "这是 ASML 的核心环节：极紫外光（EUV）穿过绘有电路图的掩模版，经精密反射镜缩小后，把电路图案印在晶圆上。"
+            },
+            {
+              head: "第4步：刻蚀与填充金属导线",
+              desc: "洗去感光部分形成微米级沟槽，再填入铜等导电材料，构建电流通道。"
+            },
+            {
+              head: "第5步：切割、测试与封装",
+              desc: "一张圆晶圆上包含数百颗芯片，经过检测后切割成独立小方块并加上保护外壳，即可装入手机或电脑。"
+            }
+          ],
+          analogy: "制造芯片就像建造一座微观世界的百层摩天大楼，每一层都必须严丝合缝地对齐。",
+          impact: "正是这套精密工艺，让指甲盖大小的芯片拥有了惊人的计算能力。"
+        },
+        hi: {
+          tag: "पूरी निर्माण प्रक्रिया",
+          title: "ASML मशीनों से चिप कैसे बनाई जाती है? (पूरा प्रोसेस)",
+          summary: "एक चिप बनने में सैकड़ों चरण और लगभग 3 से 4 महीने लगते हैं। आम समझ के लिए इसे 5 आसान चरणों में देखें:",
+          steps: [
+            {
+              head: "चरण 1: रेत से सिलिकॉन वेफर बनाना",
+              desc: "शुद्ध रेत (क्वार्ट्ज़) को पिघलाकर शुद्ध सिलिकॉन बनाया जाता है और फिर उसे CD जैसी पतली गोल प्लेटों (वेफर) में काटा जाता है।"
+            },
+            {
+              head: "चरण 2: रोशनी के प्रति संवेदनशील परत चढ़ाना",
+              desc: "वेफर पर एक खास तरल रसायन (Photoresist) लगाया जाता है जो रोशनी पड़ने पर बदल जाता है—जैसे पुराने कैमरे की रील।"
+            },
+            {
+              head: "चरण 3: ASML मशीन से रोशनी की छपाई (Exposure)",
+              desc: "यहाँ ASML की मशीन काम आती है। खास EUV रोशनी सर्किट के नक्शे से गुज़रकर वेफर पर बेहद सूक्ष्म डिज़ाइन छाप देती है।"
+            },
+            {
+              head: "चरण 4: खुदाई और धातु भरना (Etching)",
+              desc: "रोशनी पड़े हिस्सों को साफ़ करके बारीक नालियाँ बनाई जाती हैं और उनमें तांबा भरा जाता है ताकि बिजली बह सके।"
+            },
+            {
+              head: "चरण 5: कटाई, जांच और पैकेजिंग",
+              desc: "एक गोल प्लेट पर सैकड़ों चिप्स बनती हैं। जांच के बाद इन्हें छोटे चौकोर टुकड़ों में काटकर सुरक्षित कवर में बंद किया जाता है।"
+            }
+          ],
+          analogy: "चिप बनाना 100 मंज़िला सूक्ष्म इमारत बनाने जैसा है—जहाँ हर मंज़िल को बेहद सटीकता से एक के ऊपर एक बनाया जाता है।",
+          impact: "इसी प्रक्रिया की वजह से आज आपकी जेब में रखे फ़ोन में सुपरकंप्यूटर जैसी ताकत समाई है।"
+        }
+      },
+      {
+        id: "how_chip_calculates",
+        keywords: ["calculate", "calculation", "math", "binary", "transistor", "হিসাব", "গণনা", "ট্রানজিস্টর", "计算", "हिसाब"],
+        interactiveDemo: true,
+        bn: {
+          tag: "চিপের ভেতরের রহস্য",
+          title: "একটি চিপ কীভাবে হিসাব বা গণনা করে?",
+          summary: "চিপ আমাদের মতো ১, ২, ৩ বা ক, খ, গ বোঝে না। চিপ শুধু দুটি অবস্থা বোঝে: বিদ্যুৎ চালু আছে (১) অথবা বিদ্যুৎ বন্ধ আছে (০)। চিপের ভেতরে কোটি কোটি অতি ক্ষুদ্র সুইচ থাকে—যাদের 'ট্রানজিস্টর' বলে। এই সুইচগুলো সেকেন্ডে শত শত কোটি বার অন-অফ হয়ে সব হিসাব করে ফেলে।",
+          steps: [
+            {
+              head: "১. সুইচের ভাষা (০ এবং ১ / Binary)",
+              desc: "ঘরের লাইটের সুইচ যেমন অন করলে আলো জ্বলে (১) আর অফ করলে নিভে যায় (০), চিপের ভেতরের ট্রানজিস্টরও ঠিক সেভাবে অন-অফ হয়।"
+            },
+            {
+              head: "২. লজিক গেট (সিদ্ধান্ত নেওয়ার দল)",
+              desc: "কয়েকটি সুইচ একসাথে মিলে ছোট দল তৈরি করে—যাকে 'লজিক গেট' বলে। যেমন: দুটি সুইচই অন থাকলে তবেই উত্তর 'হ্যাঁ' হবে (AND গেট)। এভাবেই যোগ, বিয়োগ, গুণ বা ভাগ করা হয়।"
+            },
+            {
+              head: "৩. ছবি, লেখা ও ভিডিও কীভাবে আসে?",
+              desc: "কম্পিউটার প্রতিটি অক্ষর বা রঙকে ০ আর ১-এর কোডে বদলে নেয়। কোটি কোটি সুইচ একসাথে কাজ করায় আপনি স্ক্রিনে মুহূর্তের মধ্যে ভিডিও দেখেন বা AI-এর উত্তর পান।"
+            }
+          ],
+          analogy: "রাতের বেলা দূর থেকে টর্চলাইট একবার জ্বালিয়ে আর দুবার নিভিয়ে যেমন সংকেত পাঠানো যায়, চিপও বিদ্যুতের সংকেত অন-অফ করে অবিশ্বাস্য গতিতে কথা বলে ও হিসাব করে।",
+          impact: "ব্যাংকের হিসাব-নিকাশ, মোবাইলে ক্যালকুলেটর, গুগল সার্চ থেকে শুরু করে AI-এর জটিল চিন্তা—সবকিছুই এই ০ এবং ১-এর জাদুতে চলে।"
+        },
+        en: {
+          tag: "Inside the Chip",
+          title: "How Does a Chip Actually Calculate?",
+          summary: "A chip does not understand letters or numbers the way humans do. It only understands two states: electricity ON (1) or electricity OFF (0). Inside a chip are billions of microscopic switches called 'transistors' that flip on and off billions of times per second.",
+          steps: [
+            {
+              head: "1. The Language of Switches (0 and 1)",
+              desc: "Just like a wall light switch is either ON (1) or OFF (0), every transistor inside a chip acts as a tiny electronic switch."
+            },
+            {
+              head: "2. Logic Gates (Tiny Decision Makers)",
+              desc: "Groups of transistors team up to form 'logic gates' that follow simple rules—such as outputting 1 only if two switches are ON. Combining millions of gates performs addition, subtraction, and comparisons."
+            },
+            {
+              head: "3. Turning Numbers into Text, Photos & AI",
+              desc: "Every letter, color pixel, and sound wave is converted into combinations of 0s and 1s, allowing the chip to process videos and AI answers in milliseconds."
+            }
+          ],
+          analogy: "Think of flashing a flashlight in Morse code—except a chip flashes billions of microscopic light switches every single second.",
+          impact: "Everything from a simple calculator to banking transfers and AI chatbots runs on these ultra-fast 0 and 1 switches."
+        },
+        zh: {
+          tag: "芯片内部原理",
+          title: "芯片是如何进行计算的？",
+          summary: "芯片不像人类那样直接认识数字或文字，它只懂两种状态：通电（1）和断电（0）。芯片内部有数十亿个被称为“晶体管”的微型开关，每秒开合数十亿次来完成所有计算。",
+          steps: [
+            {
+              head: "1. 开关的语言（0 和 1）",
+              desc: "就像家里的电灯开关只有“开(1)”和“关(0)”两种状态，芯片里的晶体管也是微型的电子开关。"
+            },
+            {
+              head: "2. 逻辑门（微型决策单元）",
+              desc: "多个晶体管组合成“逻辑门”，执行简单的判断规则，成千上万个逻辑门配合就能完成加减乘除运算。"
+            },
+            {
+              head: "3. 从 0 和 1 变成文字、画面与 AI",
+              desc: "所有文字、图片颜色和声音都会被编码成 0 和 1 的组合，芯片高速处理这些信号，便呈现出了视频和 AI 回答。"
+            }
+          ],
+          analogy: "就像用手电筒闪烁发送摩斯电码一样，芯片每秒钟都在闪烁数十亿个微型开关来传递和计算信息。",
+          impact: "无论是手机计算器、银行转账还是 AI 对话，底层全都是这些 0 和 1 开关在高速运转。"
+        },
+        hi: {
+          tag: "चिप के अंदर का विज्ञान",
+          title: "एक चिप हिसाब या गणना कैसे करती है?",
+          summary: "चिप हमारी तरह 1, 2, 3 या अक्षर नहीं समझती। चिप सिर्फ़ दो बातें समझती है: बिजली चालू (1) या बिजली बंद (0)। चिप के अंदर अरबों सूक्ष्म स्विच (ट्रांजिस्टर) होते हैं जो एक सेकंड में अरबों बार ऑन-ऑफ़ होकर हिसाब लगाते हैं।",
+          steps: [
+            {
+              head: "1. स्विच की भाषा (0 और 1)",
+              desc: "जैसे कमरे के बल्ब का स्विच चालू (1) या बंद (0) होता है, वैसे ही चिप के अंदर हर ट्रांजिस्टर एक नन्हा स्विच है।"
+            },
+            {
+              head: "2. लॉजिक गेट्स (फैसला लेने वाली टीम)",
+              desc: "कई स्विच मिलकर 'लॉजिक गेट' बनाते हैं जो छोटे नियमों के आधार पर जोड़, घटाव और तुलना करते हैं।"
+            },
+            {
+              head: "3. 0 और 1 से फ़ोटो, वीडियो और AI तक",
+              desc: "हर अक्षर और रंग को 0 और 1 के कोड में बदला जाता है, जिससे चिप पलक झपकते ही वीडियो दिखाती है और AI के जवाब देती है।"
+            }
+          ],
+          analogy: "जैसे रात में टॉर्च जलाकर और बुझाकर इशारे भेजे जाते हैं, चिप भी बिजली के करोड़ों स्विच ऑन-ऑफ़ करके तेज़ी से हिसाब लगाती है।",
+          impact: "मोबाइल कैलकुलेटर से लेकर बैंक लेनदेन और AI तक सब कुछ इसी 0 और 1 के खेल पर चलता है।"
+        }
+      },
+      {
+        id: "asml",
+        keywords: ["asml", "dutch", "নেদারল্যান্ডস", "আসএমএল", "阿斯麦"],
+        bn: {
+          tag: "প্রতিষ্ঠান পরিচিতি",
+          title: "ASML কী এবং তারা কেন এত গুরুত্বপূর্ণ?",
+          summary: "ASML হলো নেদারল্যান্ডসের একটি কোম্পানি। তারা সরাসরি মোবাইল বা চিপ বানায় না; বরং চিপ বানানোর সবচেয়ে জটিল ও সূক্ষ্ম মেশিন তৈরি করে। বিশ্বের সবচেয়ে আধুনিক চিপ বানাতে অ্যাপল, এনভিডিয়া বা স্যামসাংয়ের মতো কোম্পানিগুলো ASML-এর মেশিনের ওপর নির্ভরশীল।",
+          analogy: "সোনার গয়না বানানোর কারিগরদের যেমন বিশেষ সূক্ষ্ম যন্ত্রপাতি লাগে, তেমনি বিশ্বের সব বড় চিপ নির্মাতার কারখানায় ASML-এর তৈরি মেশিন ছাড়া আধুনিক চিপ বানানো প্রায় অসম্ভব।",
+          impact: "আপনার নতুন ফোনটি আগের চেয়ে দ্রুতগতির হওয়া এবং ব্যাটারি কম খরচ হওয়ার পেছনে ASML-এর মেশিনের বড় ভূমিকা আছে।"
+        },
+        en: {
+          tag: "Company",
+          title: "What is ASML and Why Does It Matter?",
+          summary: "ASML is a Dutch company that builds the ultra-precise machines used to manufacture computer chips. Major chipmakers rely on ASML equipment to produce the world's most advanced processors.",
+          analogy: "ASML doesn't bake the bread—it builds the only high-tech oven capable of baking the finest bread in the world.",
+          impact: "Every time smartphones become faster and more battery-efficient, ASML's machines played a key role behind the scenes."
+        },
+        zh: {
+          tag: "企业简介",
+          title: "ASML 是什么？为什么它如此重要？",
+          summary: "ASML（阿斯麦）是一家荷兰公司，它不直接生产手机或芯片，而是制造用来生产高端芯片的精密光刻机。",
+          analogy: "ASML 自己不烤面包，但它制造了世界上唯一能烤出最顶级面包的精密烤箱。",
+          impact: "手机变得更快、更省电，背后都离不开 ASML 设备制造的先进芯片。"
+        },
+        hi: {
+          tag: "कंपनी परिचय",
+          title: "ASML क्या है और यह इतनी महत्वपूर्ण क्यों है?",
+          summary: "ASML नीदरलैंड की एक कंपनी है जो चिप बनाने वाली सबसे उन्नत मशीनें बनाती है। दुनिया की बड़ी चिप कंपनियाँ इन्हीं मशीनों का उपयोग करती हैं।",
+          analogy: "ASML खुद रोटी नहीं बनाती, बल्कि दुनिया का सबसे बेहतरीन तंदूर बनाती है जिस पर सबसे उन्नत चिप तैयार होती है।",
+          impact: "आपके नए फ़ोन की तेज़ स्पीड और लंबी बैटरी के पीछे ASML की मशीनों की बड़ी भूमिका है।"
+        }
+      },
+      {
+        id: "euv",
+        keywords: ["euv", "high-na", "extreme ultraviolet", "ইইউভি", "极紫外"],
+        bn: {
+          tag: "অত্যাধুনিক মেশিন",
+          title: "EUV এবং High-NA EUV মেশিন কী?",
+          summary: "EUV (Extreme Ultraviolet) হলো বিশেষ ধরনের অতি ক্ষুদ্র তরঙ্গদৈর্ঘ্যের আলো। ASML গলিত টিনের ফোঁটায় লেজার মেরে এই বিশেষ আলো তৈরি করে, যা দিয়ে চিপের ওপর অতি সূক্ষ্ম নকশা আঁকা হয়। High-NA EUV হলো এর আরও উন্নত সংস্করণ।",
+          analogy: "মোটা মার্কার পেন দিয়ে যেমন ছোট কাগজে স্পষ্ট লেখা যায় না, চিকন নিবের কলম লাগে—EUV হলো সেই অতি সূক্ষ্ম নিবের কলম।",
+          impact: "আধুনিক AI মডেল চালানোর জন্য যে সুপার-ফাস্ট চিপ দরকার, তা এই EUV মেশিন ছাড়া তৈরি করা সম্ভব নয়।"
+        },
+        en: {
+          tag: "Flagship Tech",
+          title: "What are EUV and High-NA EUV Machines?",
+          summary: "EUV uses ultra-short-wavelength light generated by firing lasers at microscopic tin droplets. High-NA EUV is the next generation with even sharper optical precision.",
+          analogy: "You can't write tiny text with a thick marker—you need an ultra-fine pen. EUV light is that ultra-fine pen for chipmaking.",
+          impact: "Advanced AI data centers rely on chips printed using EUV lithography."
+        },
+        zh: {
+          tag: "尖端设备",
+          title: "什么是 EUV 和 High-NA EUV 光刻机？",
+          summary: "EUV（极紫外光刻）利用激光轰击微小的锡液滴产生极短波长的光；High-NA EUV 则是光学精度更高的下一代系统。",
+          analogy: "粗头马克笔无法写出极小的字，必须用极细的笔尖——EUV 就是芯片制造中的“超细笔尖”。",
+          impact: "训练和运行大型 AI 模型所需的顶尖芯片都依赖 EUV 技术制造。"
+        },
+        hi: {
+          tag: "अत्याधुनिक मशीन",
+          title: "EUV और High-NA EUV मशीन क्या है?",
+          summary: "EUV बेहद छोटी तरंग वाली खास रोशनी है जिसे पिघले टिन की बूंदों पर लेज़र मारकर बनाया जाता है। High-NA EUV इसका और भी सटीक नया रूप है।",
+          analogy: "मोटे मार्कर से छोटे अक्षर नहीं लिखे जा सकते, उसके लिए बारीक निब वाला पेन चाहिए—EUV वही सबसे बारीक पेन है।",
+          impact: "आधुनिक AI चलाने वाली तेज़ चिप्स इसी EUV तकनीक से बनती हैं।"
+        }
+      },
+      {
+        id: "ai",
+        keywords: ["ai", "artificial intelligence", "এআই", "কৃত্রিম বুদ্ধিমত্তা", "人工智能"],
+        bn: {
+          tag: "আর্টিফিশিয়াল ইন্টেলিজেন্স",
+          title: "আর্টিফিশিয়াল ইন্টেলিজেন্স (AI) কী?",
+          summary: "AI হলো এমন কম্পিউটার প্রোগ্রাম বা মডেল, যা মানুষের মতো চিন্তা করার অনুকরণ করতে পারে—যেমন ভাষা বোঝা, প্রশ্নের উত্তর দেওয়া, ছবি চেনা বা অনুবাদ করা।",
+          analogy: "একটি ছোট শিশুকে হাজার হাজার বই ও ছবি দেখিয়ে শেখালে সে যেমন নতুন জিনিস চিনতে পারে, AI-কেও বিপুল তথ্য দিয়ে প্রশিক্ষণ দেওয়া হয়।",
+          impact: "মোবাইলে ভয়েস সার্চ, গুগল ম্যাপের ট্রাফিক তথ্য, রোগ নির্ণয় এবং লেখাপড়ায় সহায়তা—সব জায়গায় AI কাজ করছে।"
+        },
+        en: {
+          tag: "Core AI",
+          title: "What is Artificial Intelligence (AI)?",
+          summary: "AI refers to software systems that learn patterns from large amounts of data to understand language, recognize images, translate, and solve problems.",
+          analogy: "Just like a child learns to recognize animals after seeing many picture books, AI learns patterns from millions of examples.",
+          impact: "AI powers voice assistants, map navigation, spam filters, medical imaging, and translation tools."
+        },
+        zh: {
+          tag: "核心概念",
+          title: "什么是人工智能（AI）？",
+          summary: "AI 是能够从海量数据中学习规律，从而理解语言、识别图像、翻译和辅助决策的软件系统。",
+          analogy: "就像孩子看过很多绘本后能认出各种动物一样，AI 通过学习大量示例来掌握规律。",
+          impact: "语音助手、地图导航、垃圾短信过滤和医疗影像分析都在使用 AI。"
+        },
+        hi: {
+          tag: "मुख्य AI",
+          title: "आर्टिफिशियल इंटेलिजेंस (AI) क्या है?",
+          summary: "AI ऐसे कंप्यूटर प्रोग्राम हैं जो डेटा से सीखकर भाषा समझ सकते हैं, सवालों के जवाब दे सकते हैं और अनुवाद या पहचान कर सकते हैं।",
+          analogy: "जैसे एक बच्चा हज़ारों किताबें और तस्वीरें देखकर चीज़ें पहचानना सीखता है, वैसे ही AI डेटा से सीखता है।",
+          impact: "मोबाइल मैप्स, वॉइस असिस्टेंट, अनुवाद और स्वास्थ्य जांच में AI आम लोगों की मदद कर रहा है।"
+        }
+      },
+      {
+        id: "ai_asml_link",
+        keywords: ["connection", "together", "সম্পর্ক", "ভবিষ্যৎ", "未来", "संबंध"],
+        bn: {
+          tag: "দুই প্রযুক্তির মেলবন্ধন",
+          title: "AI এবং ASML একে অপরের সাথে কীভাবে যুক্ত?",
+          summary: "এটি একটি দ্বিমুখী সম্পর্ক: (১) শক্তিশালী AI চালাতে হাজার হাজার উন্নত চিপ দরকার, যা ASML-এর মেশিনে তৈরি হয়। (২) আবার ASML নিজের মেশিনের নকশা ও ত্রুটি যাচাই করতে AI ব্যবহার করে।",
+          analogy: "এটি অনেকটা উন্নত যন্ত্র ও দক্ষ কারিগরের সম্পর্কের মতো—যন্ত্র কারিগরকে সাহায্য করে, আর কারিগর সেই যন্ত্রকে আরও নিখুঁত করে তোলে।",
+          impact: "এই দুই প্রযুক্তির উন্নতির ফলে ভবিষ্যতে সাধারণ মানুষের হাতের নাগালে আরও সাশ্রয়ী, দ্রুত ও স্মার্ট সেবা পৌঁছে যাবে।"
+        },
+        en: {
+          tag: "The Connection",
+          title: "How Are AI and ASML Connected?",
+          summary: "It is a two-way loop: AI requires massive numbers of advanced chips made with ASML machines, while ASML uses computational modeling and AI to improve lithography precision.",
+          analogy: "Better tools build smarter machines, and those smarter machines help design even better tools.",
+          impact: "This partnership drives faster, cheaper, and smarter everyday devices for everyone."
+        },
+        zh: {
+          tag: "协同关系",
+          title: "AI 与 ASML 是如何相互促进的？",
+          summary: "这是一种双向循环：AI 需要大量由 ASML 设备制造的先进芯片；同时 ASML 也利用计算光刻和 AI 来提升设备精度。",
+          analogy: "更好的工具造出更聪明的机器，而更聪明的机器又反过来设计出更精密的工具。",
+          impact: "两者的结合让普通人能够用上更智能、更高效的日常科技产品。"
+        },
+        hi: {
+          tag: "दोनों का संबंध",
+          title: "AI और ASML एक-दूसरे से कैसे जुड़े हैं?",
+          summary: "यह दोतरफ़ा रिश्ता है: AI को चलाने के लिए उन्नत चिप्स चाहिए जो ASML की मशीनों से बनती हैं, और ASML अपनी मशीनों की सटीकता बढ़ाने के लिए AI का उपयोग करती है।",
+          analogy: "बेहतर औज़ार से स्मार्ट मशीन बनती है, और वही स्मार्ट मशीन और भी बेहतर औज़ार बनाने में मदद करती है।",
+          impact: "इन दोनों के मेल से आम लोगों के लिए तेज़, सस्ती और स्मार्ट तकनीक संभव हो रही है।"
+        }
+      }
+    ];
+
+    let currentLang = "bn";
+    let currentTopicId = "chip_making_process";
+    let bits = [0, 1, 0, 1]; // 4-bit interactive transistor switches (8, 4, 2, 1)
+
+    const langSelect = document.getElementById("langSelect");
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const speakBtn = document.getElementById("speakBtn");
+    const topicChips = document.getElementById("topicChips");
+    const detailCard = document.getElementById("detailCard");
+    const overviewGrid = document.getElementById("overviewGrid");
+
+    function getDecimalValue() {
+      return bits[0] * 8 + bits[1] * 4 + bits[2] * 2 + bits[3] * 1;
+    }
+
+    function renderUI() {
+      const ui = UI_TEXT[currentLang];
+      document.getElementById("appTitle").textContent = ui.title;
+      document.getElementById("appSubtitle").textContent = ui.subtitle;
+      searchInput.placeholder = ui.placeholder;
+      searchBtn.textContent = ui.searchBtn;
+      speakBtn.textContent = ui.speakBtn;
+
+      // Render topic chips
+      topicChips.innerHTML = "";
+      TOPICS.forEach(topic => {
+        const data = topic[currentLang];
+        const chip = document.createElement("span");
+        chip.className = "chip" + (topic.id === currentTopicId ? " active" : "");
+        chip.textContent = data.title.split("?")[0];
+        chip.onclick = () => {
+          currentTopicId = topic.id;
+          renderUI();
+        };
+        topicChips.appendChild(chip);
+      });
+
+      // Render main card
+      const activeTopic = TOPICS.find(t => t.id === currentTopicId) || TOPICS[0];
+      const info = activeTopic[currentLang];
+
+      let stepsHTML = "";
+      if (info.steps && info.steps.length) {
+        stepsHTML = `<div class="steps-container">` +
+          info.steps.map(s => `<div class="step-item"><strong>${s.head}</strong><span>${s.desc}</span></div>`).join("") +
+          `</div>`;
+      }
+
+      let demoHTML = "";
+      if (activeTopic.interactiveDemo) {
+        const weights = [8, 4, 2, 1];
+        const buttons = bits.map((b, idx) =>
+          `<button class="bit-btn ${b ? "on" : ""}" onclick="toggleBit(${idx})">Switch (${weights[idx]}): ${b ? "ON (1)" : "OFF (0)"}</button>`
+        ).join("");
+        demoHTML = `
+          <div class="demo-box">
+            <h4>${ui.demoTitle}</h4>
+            <div style="color: var(--muted); font-size: 0.92rem;">${ui.demoHint}</div>
+            <div class="switch-row">
+              ${buttons}
+              <div class="calc-result">${ui.demoResultPrefix} ${getDecimalValue()}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      detailCard.innerHTML = `
+        <span class="badge">${info.tag}</span>
+        <h2>${info.title}</h2>
+        <p class="simple-text">${info.summary}</p>
+        ${stepsHTML}
+        ${demoHTML}
+        <div class="analogy-box">
+          <strong>${ui.analogyLabel}</strong>
+          <span>${info.analogy}</span>
+        </div>
+        <div class="daily-impact">
+          <strong>${ui.impactLabel}</strong>
+          <span>${info.impact}</span>
+        </div>
+      `;
+
+      // Render all cards grid below
+      overviewGrid.innerHTML = "";
+      TOPICS.forEach(topic => {
+        const d = topic[currentLang];
+        const mini = document.createElement("div");
+        mini.className = "mini-card";
+        mini.innerHTML = `<h4>${d.title}</h4><p>${d.summary.slice(0, 95)}...</p>`;
+        mini.onclick = () => {
+          currentTopicId = topic.id;
+          renderUI();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+        overviewGrid.appendChild(mini);
+      });
+    }
+
+    window.toggleBit = function(index) {
+      bits[index] = bits[index] ? 0 : 1;
+      renderUI();
+    };
+
+    function handleSearch() {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) return;
+      const found = TOPICS.find(t =>
+        t.keywords.some(k => q.includes(k)) ||
+        t[currentLang].title.toLowerCase().includes(q) ||
+        t[currentLang].summary.toLowerCase().includes(q)
+      );
+      if (found) {
+        currentTopicId = found.id;
+        renderUI();
+      }
+    }
+
+    function speakCurrent() {
+      if (!("speechSynthesis" in window)) return;
+      window.speechSynthesis.cancel();
+      const activeTopic = TOPICS.find(t => t.id === currentTopicId) || TOPICS[0];
+      const info = activeTopic[currentLang];
+      const stepText = info.steps ? info.steps.map(s => `${s.head}. ${s.desc}`).join(" ") : "";
+      const text = `${info.title}. ${info.summary} ${stepText} ${info.analogy} ${info.impact}`;
+      const utter = new SpeechSynthesisUtterance(text);
+      const langMap = { bn: "bn-BD", en: "en-US", zh: "zh-CN", hi: "hi-IN" };
+      utter.lang = langMap[currentLang] || "en-US";
+      window.speechSynthesis.speak(utter);
+    }
+
+    langSelect.onchange = (e) => {
+      currentLang = e.target.value;
+      window.speechSynthesis?.cancel();
+      renderUI();
+    };
+    searchBtn.onclick = handleSearch;
+    searchInput.onkeyup = (e) => { if (e.key === "Enter") handleSearch(); };
+    speakBtn.onclick = speakCurrent;
+
+    renderUI();
+  </script>
+</body>
+</html>
