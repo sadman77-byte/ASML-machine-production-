@@ -4,7 +4,7 @@ To know more, please use this link--
 
 https://voluble-empanada-18984a.netlify.app/
 
-Disclaimer: This is for education purposes only.
+
 
 # সাধারণ মানুষের জন্য AI ও ASML সহজ গাইড (Simple Guide to AI & ASML)
 
